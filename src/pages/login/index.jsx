@@ -1,13 +1,42 @@
-import React, {useEffect, useState} from 'react';
-import { Button, Form, Input } from 'antd';
+import React from 'react';
+import { Button, Form, Input, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import './login.less'
 import logo from '../../assets/images/logo.png'
+import './login.less'
+import user from '../api/user'
 
 const Login = ()=>{
   const onFinish = (values) => {
-    console.log('Received values of form: ', values);
+    user.login(values)
+      .then(res=>{
+      message.success("登陆成功！");
+    }).catch(err=>{
+      message.error(err.msg)
+    })
   };
+  //
+  const validateUserN = [
+    {required: true, message: '请输入你的用户名！'},
+    { min: 4, message: '用户名至少4位！' },
+    { max: 12, message: '用户名最多12位！' },
+    { pattern: /^[a-zA-Z0-9_]+$/, message: '用户名必须是英文、数字或下划线组成！' },
+  ]
+
+  //对密码进行自定义验证
+  const validatePwd = (rule, value, callback) => {
+    console.log('validatePwd()', rule, value)
+    if(!value) {
+      callback('请输入你的密码！')
+    } else if (value.length<4) {
+      callback('密码长度不能小于4位！')
+    } else if (value.length>12) {
+      callback('密码长度不能大于12位！')
+    } else if (!/^[a-zA-Z0-9_]+$/.test(value)) {
+      callback('密码必须是英文、数字或下划线组成！')
+    } else {
+      callback() // 验证通过
+    }
+  }
 
   return (
     <div className="login">
@@ -24,22 +53,14 @@ const Login = ()=>{
         >
           <Form.Item
             name="username"
-            rules={[
-              {
-                required: true,
-                message: '请输入你的用户名!',
-              },
-            ]}
+            rules={validateUserN}
           >
             <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="用户名" />
           </Form.Item>
           <Form.Item
             name="password"
             rules={[
-              {
-                required: true,
-                message: '请输入你的密码!',
-              },
+              {validator: validatePwd}
             ]}
           >
             <Input
