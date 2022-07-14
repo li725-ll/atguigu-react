@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from "react-router-dom";
+import {Route, BrowserRouter, Routes, Navigate} from "react-router-dom";
 import React from "react";
 import "./App.less";
 import Login from "./pages/login";
@@ -9,8 +9,9 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<Login/>}/>
+        <Route path="/" element={<Navigate to="/admin"/>}/>
         <Route path="/admin/*" element={<Admin />} />
+        <Route path="/login" element={<Login/>}/>
         <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
