@@ -14,7 +14,7 @@ const Login = (props)=>{
     user.login(values)
     .then(res=>{
       setLocalStorage("USER", res);
-      navigate('/home', { replace: true });
+      navigate('/admin/home', { replace: true });
       message.success("登陆成功！");
     }).catch(err=>{
       message.error(err.msg)
