@@ -18,6 +18,7 @@ const Header = ({getCollapsed}) =>{
     >
       {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
         className: 'trigger',
+        style: { margin: '0 20px', fontSize: '20px'},
         onClick: changeCollapsed,
       })}
     </Layout.Header>

@@ -3,7 +3,7 @@ import { Button, Form, Input, message } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router-dom";
 import logo from '../../assets/images/logo.png'
-import './login.less'
+import './index.less'
 import user from '../../api/user'
 import { setLocalStorage } from "../../utils/storage";
 
